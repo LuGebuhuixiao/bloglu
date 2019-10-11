@@ -1,0 +1,199 @@
+{% extends 'base/base.html' %}
+{% block title %}
+  首页
+{% endblock %}
+
+{% block main %}
+  <article>
+    {% block sidebar %}
+      <!--banner begin-->
+      <div class="picsbox">
+        <div class="banner">
+          <div id="banner" class="fader">
+            {% for banner in banners|slice:':3' %}
+              <li class="slide">
+                <a href="{% url 'article:info' %}?id={{ banner.news.id }}" target="_blank">
+                  <img src="{% static 'media' %}/{{ banner.image_url }}">
+                  <span class="imginfo">{{ banner.news.title }}</span>
+                </a>
+              </li>
+            {% endfor %}
+
+
+            {#          <li class="slide"><a href="/" target="_blank"><img src="../static/images/banner02.jpg"><span#}
+            {#                  class="imginfo">网页中图片属性固定宽度，如何用js改变大小</span></a>#}
+            {#          </li>#}
+            {#          <li class="slide"><a href="/" target="_blank"><img src="../static/images/banner03.jpg"><span#}
+            {#                  class="imginfo">个人博客，属于我的小世界！</span></a>#}
+            {#          </li>#}
+            <div class="fader_controls">
+              <div class="page prev" data-target="prev">&lsaquo;</div>
+              <div class="page next" data-target="next">&rsaquo;</div>
+              <ul class="pager_list">
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="toppic">
+          <li><a href="/" target="_blank"> <i><img src="../static/images/toppic01.jpg"></i>
+            <h2>别让这些闹心的套路，毁了你的网页设计!</h2>
+            <span>学无止境</span> </a></li>
+          <li><a href="/" target="_blank"> <i><img src="../static/images/zd01.jpg"></i>
+            <h2>个人博客，属于我的小世界！</h2>
+            <span>学无止境</span> </a></li>
+        </div>
+      </div>
+      <!--banner end-->
+      <div class="blank"></div>
+
+      <!--blogsbox begin-->
+      <div class="blogsbox">
+        {% for article in articles %}
+          <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+            <h3 class="blogtitle">
+              <a href="{% url 'article:info' %}?id={{ article.id }}" target="_blank">
+                {{ article.title }}
+              </a>
+            </h3>
+            <span class="blogpic">
+            <a href="{% url 'article:info' %}?id={{ article.id }}" title="">
+              <img src="{{ article.image_url }}" alt="">
+            </a>
+          </span>
+            <p class="blogtext">{{ article.summary }}</p>
+            <div class="bloginfo">
+              <ul>
+                <li class="author"><a href="#">{{ article.author }}</a></li>
+                <li class="lmname"><a href="#">{{ article.category }}</a></li>
+                <li class="timer">{{ article.create_date | date:'Y-m-d' }}</li>
+                <li class="view"><span>{{ article.views }}</span>已阅读</li>
+                <li class="like">{{ article.loves }}</li>
+              </ul>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <!--blogsbox end-->
+    {% endblock %}
+    <div class="sidebar">
+      <div class="zhuanti">
+        <h2 class="hometitle">特别推荐</h2>
+        <ul>
+          {% for ban in banners|slice:'3:' %}
+            <li>
+              <i><img src="{{ ban.news.image_url }}"></i>
+              <p>{{ ban.news.title }}
+                <span>
+                  <a href="{% url 'article:info' %}?id={{ ban.news.id }}">阅读</a>
+                </span>
+              </p>
+            </li>
+          {% endfor %}
+
+
+          {#          <li><i><img src="../static/images/b04.jpg"></i>#}
+          {#            <p>5.20 我想对你说 <span><a href="/">阅读</a></span></p>#}
+          {#          </li>#}
+          {#          <li><i><img src="../static/images/b05.jpg"></i>#}
+          {#            <p>个人博客，属于我的小世界！ <span><a href="/">阅读</a></span></p>#}
+          {#          </li>#}
+        </ul>
+      </div>
+      {#      <div class="tuijian">#}
+      {#        <h2 class="hometitle">推荐文章</h2>#}
+      {#        <ul class="tjpic">#}
+      {#          <i><img src="../static/images/toppic01.jpg"></i>#}
+      {#          <p><a href="/">别让这些闹心的套路，毁了你的网页设计</a></p>#}
+      {#        </ul>#}
+      {#        <ul class="sidenews">#}
+      {#          <li><i><img src="../static/images/toppic01.jpg"></i>#}
+      {#            <p><a href="/">别让这些闹心的套路，毁了你的网页设计</a></p>#}
+      {#            <span>2018-05-13</span></li>#}
+      {#          <li><i><img src="../static/images/toppic02.jpg"></i>#}
+      {#            <p><a href="/">给我模板PSD源文件，我给你设计HTML！</a></p>#}
+      {#            <span>2018-05-13</span></li>#}
+      {#          <li><i><img src="../static/images/v1.jpg"></i>#}
+      {#            <p><a href="/">别让这些闹心的套路，毁了你的网页设计</a></p>#}
+      {#            <span>2018-05-13</span></li>#}
+      {#          <li><i><img src="../static/images/v2.jpg"></i>#}
+      {#            <p><a href="/">给我模板PSD源文件，我给你设计HTML！</a></p>#}
+      {#            <span>2018-05-13</span></li>#}
+      {#        </ul>#}
+      {#      </div>#}
+      <div class="tuijian">
+        <h2 class="hometitle">点击排行</h2>
+        <ul class="tjpic">
+          <i><img src="{{ view_articles.first.image_url }}"></i>
+          <p><a href="{% url 'article:info' %}?id={{ view_articles.first.id }}">{{ view_articles.first.title }}</a></p>
+        </ul>
+        <ul class="sidenews">
+          {% for view_article in view_articles|slice:'1:' %}
+            <li><i><img src="{{ view_article.image_url }}"></i>
+              <p><a href="{% url 'article:info' %}?id={{ view_article.id }}">{{ view_article.title }}</a></p>
+              <span>{{ view_article.create_date|date:'Y-m-d' }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="cloud">
+        <h2 class="hometitle">标签云</h2>
+        <ul>
+          {% for tag in tags %}
+            <a href="/">{{ tag.name }}</a>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="links">
+        <h2 class="hometitle">友情链接</h2>
+        <ul>
+          <li><a href="/" target="_blank">路远博客</a></li>
+          <li><a href="http://www.yangqq.com" target="_blank">D设计师博客</a></li>
+          <li><a href="http://www.yangqq.com" target="_blank">优秀个人博客</a></li>
+        </ul>
+      </div>
+      <div class="guanzhu" id="follow-us">
+        <h2 class="hometitle">关注我们 么么哒！</h2>
+        <ul>
+          <li class="sina"><a href="/" target="_blank"><span>新浪微博</span>路远博客</a></li>
+          <li class="tencent"><a href="/" target="_blank"><span>简书账号</span>路远博客</a></li>
+          <li class="qq"><a href="/" target="_blank"><span>QQ号</span>643739651</a></li>
+          <li class="email"><a href="/" target="_blank"><span>邮箱帐号</span>643739651@qq.com</a></li>
+          <li class="wxgzh"><a href="/" target="_blank"><span>微信号</span>15971466561</a></li>
+          <li class="wx"><img src="{% static 'images/wzp.jpg' %}"></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+{% endblock %}
+
+{% block script %}
+  <script type="text/javascript">
+    $.ajaxSetup({
+      data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+    });
+    $(document).ready(function () {
+      var page = 1;  // 默认页码是1
+      var empty_page = false;
+      var block_request = false;
+
+      $(window).scroll(function () {
+        var margin = $(document).height() - $(window).height() - 200;
+        if ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+          {% if comment_count < 10 %}
+            return false;
+          {% endif %}
+          block_request = true;
+          page += 1;
+          $.get('?page=' + page, function (data) {
+            if (data == '') {
+              empty_page = true;
+            } else {
+              block_request = false;
+              $('.public-comment-list').append(data);
+            }
+          });
+        }
+      });
+    });
+  </script>
+{% endblock %}

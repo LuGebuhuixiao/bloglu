@@ -1,0 +1,72 @@
+{% extends 'base/../static/base.html' %}
+{% block title %}
+  注册
+{% endblock %}
+{% block link %}
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+<!-- container start -->
+{% block article %}
+  <article>
+    <div id="blogsbox">
+      <div id="container">
+        <div class="register-contain">
+          <div class="top-contain">
+            <h4 class="please-register">请注册</h4>
+            {#      <a href="javascript:void(0);" class="login">立即登录 &gt;</a>#}
+            <a href="{% url 'users:login' %}" class="login">立即登录 &gt;</a>
+          </div>
+          <form action="{% url 'users:register' %}" method="post" class="form-contain">
+            {% csrf_token %}
+            <div class="form-item">
+              <p style="color: red">{{ error_msg }}</p>
+              <input type="text" placeholder="请输入用户名" id="username" name="username"
+                     class="form-control" required>
+            </div>
+            <div class="form-item">
+              <input type="password" placeholder="请输入密码" id="password" name="password"
+                     class="form-control" required>
+            </div>
+            <div class="form-item">
+              <input type="password" placeholder="请输入确认密码" id="password_repeat" name="password_repeat"
+                     class="form-control" required>
+            </div>
+            <div class="form-item">
+              <input type="tel" placeholder="请输入手机号" id="mobile" name="mobile"
+                     class="form-control" required>
+            </div>
+            <div class="form-item">
+              <input type="email" placeholder="请输入邮箱" id="email" name="email"
+                     class="form-control" required>
+            </div>
+{#            <div class="form-item">#}
+{#              <input type="text" placeholder="请输入图形验证码" id="input_captcha" name="captcha_graph" class="form-captcha">#}
+{#              <a href="javascript:void(0);" class="captcha-graph-img">#}
+                {#          <img src="../../static/images/captcha.png" alt="验证码" title="点击刷新">#}
+{#                <img src="" alt="验证码" title="点击刷新">#}
+{#              </a>#}
+{#            </div>#}
+{#            <div class="form-item">#}
+{#              <input type="text" placeholder="请输入邮箱验证码" name="sms_captcha" class="form-captcha" id="input_smscode"#}
+{#                     autocomplete="off">#}
+{#              <a href="javascript:void(0);" class="sms-captcha" title="发送验证码">获取邮箱验证码</a>#}
+{#            </div>#}
+            <div class="form-item">
+              <input type="submit" value="立即注册" class="register-btn">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </article>
+{% endblock %}
+<!-- container end -->
+{% block top %}
+{% endblock %}
+{% block script %}
+{#  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>#}
+{#  <script src="{% static 'js/base/common.js' %}"></script>#}
+{#  <script src="{% static 'js/base/message.js' %}"></script>#}
+{#  <script src="{% static 'js/users/auth.js' %}"></script>#}
+{% endblock %}

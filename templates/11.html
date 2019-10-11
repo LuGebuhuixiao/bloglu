@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+我是页面
+{% for article in contacts.object_list %}
+  <div>
+    <span>{{ article.title }}</span>
+    <br>
+    <span>--{{ article.author }}</span>
+    <br>
+    <span>{{ article.content }}</span>
+    <br>
+    <p>-----------------------------------------------------------------------</p>
+  </div>
+{% endfor %}
+
+
+<div class="pagination">
+    <span class="step-links">
+        <div class="pagelist">
+          <a title="Total record">&nbsp;
+            <b>{{ contacts.paginator.num_pages }}</b>
+          </a>&nbsp;&nbsp;&nbsp;
+
+          {% if contacts.has_previous %}
+            <a href="?page=1">首页</a>
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>&nbsp;
+          {% endif %}
+
+          {% for page_num in c.object_list %}
+{#            <p>{{ page_num }}</p>#}
+            {% if page_num == contacts.number %}
+              <b>{{ contacts.number }}</b>&nbsp;
+            {% else %}
+              <a href="?page={{ page_num }}">{{ page_num }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">下一页</a>&nbsp;
+            <a href="?page={{ contacts.paginator.num_pages }}">尾页</a>
+          {% endif %}
+
+        </div>
+    </span>
+</div>
+</body>
+</html>

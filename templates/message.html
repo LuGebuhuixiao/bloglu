@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+{% block title %}
+  留言区
+{% endblock %}
+
+{% block link %}
+  <style>
+    form p {
+      margin: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block image %}
+  <div class="pagebg ab"></div>
+{% endblock %}
+{% block main %}
+  <div class="container">
+    <h1 class="t_nav">
+      <span>你，我生命中一个重要的过客，我们之所以是过客，因为你未曾会为我停留。</span>
+      <a href="/" class="n1">网站首页</a><a href="{% url 'life:message' %}" class="n2">留言</a>
+    </h1>
+
+    {% block news_infos %}
+      <div class="news_infos">
+        <ul>
+          <div class="whitebg">
+            <h2 class="htitle">写留言</h2>
+
+            <div class="gbox">
+              <form action="{% url 'life:message' %}" method="post">{% csrf_token %}
+                {{ blog_form.as_p }}
+                <input type="submit" value="提交" class="login-btn" style="height: 30px; width: 60px;">
+
+              </form>
+            </div>
+            <br>
+            <h2 class="htitle">留言板<p style="float: right">留言总数：{{ message.count }}条</p></h2>
+
+            <div style="border: #000 2px solid; padding: 10px">
+              <div>
+                {% for mes in message %}
+                  <div class="fb" style="padding-top: 10px; border-bottom: 1px solid darkgray">
+                    <p style="font-weight: bold; float: left">{{ mes.username }}</p>
+                    <p style="float: right">{{ mes.create_date }}</p>
+                    <br>
+                    <span>{{ mes.content }}</span>
+                  </div>
+                {% endfor %}
+              </div>
+              <div>
+                {#              {% for mes in message %}#}
+                <div class="fb" style="padding-top: 10px; border-bottom: 1px solid darkgray">
+
+                  <p style="font-weight: bold; float: left">username</p>
+                  <p style="float: right">time</p>
+                  <br>
+                  <span>content</span>
+
+                </div>
+                {#              {% endfor %}#}
+              </div>
+              <!--newsinfo end-->
+            </div>
+          </div>
+        </ul>
+      </div>
+    {% endblock %}
+
+    <div class="sidebar">
+      <div class="about">
+        <p class="avatar"><img src="{% static 'images/v1.jpg' %}" alt=""></p>
+        <p class="abname">dancesmile | 路远</p>
+        <p class="abposition">后端开发工程师</p>
+        <p class="abtext"> 一个90后草根站长！一直潜心研究web后端技术，一边工作一边积累经验，分享一些学习资源，生活趣闻，工作经历。 </p>
+      </div>
+      <div class="weixin">
+        <h2 class="hometitle">微信关注</h2>
+        <ul>
+
+                    <img src="{% static 'images/wzp.jpg' %}" >
+{#          <img src="../static/images/wzp.jpg" style="max-width: 300px">#}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
